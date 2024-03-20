@@ -26,8 +26,10 @@ public abstract record ValueObject<TBasicValue, TValueObject> where TValueObject
 
     protected abstract Result Validate();
 
-    protected virtual void ChangeValue()
-    {
+    protected virtual void ChangeValue(){}
 
+    public override string? ToString()
+    {
+        return Value?.ToString();
     }
 }

@@ -12,9 +12,5 @@ public record Result<TValue> : Result
     public TValue Value => IsSuccess ? _value! : throw new InvalidOperationException("Value not accessible in case of error");
 
     public static implicit operator Result<TValue>(TValue? value) => value is not null ? Success(value) : Failure<TValue>(Error.NullValue);
-
-    public Result<TValue> ToResult()
-    {
-        return _value is not null ? Success(_value) : Failure<TValue>(Error.NullValue);
-    }
+    public static implicit operator Result<TValue>(Error error) => Failure<TValue>(error);
 }

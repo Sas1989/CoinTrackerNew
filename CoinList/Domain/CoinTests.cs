@@ -1,7 +1,7 @@
-﻿using CoinList.Domain.CoinEntity.DomainEvents;
+﻿using CoinList.Domain.CoinEntity;
+using CoinList.Domain.CoinEntity.DomainEvents;
 using CoinList.Domain.CoinEntity.ValueObjects;
 using Common.Domain.DataTimeProvider;
-using Domain.CoinEntity;
 
 namespace CoinList.Tests.Domain;
 

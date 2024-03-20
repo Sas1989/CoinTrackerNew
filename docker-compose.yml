@@ -1,0 +1,15 @@
+version: '3.4'
+
+services:
+  app:
+    image: ${DOCKER_REGISTRY-}app
+    build:
+      context: .
+      dockerfile: App/Dockerfile
+  sql:
+    image: mcr.microsoft.com/mssql/server
+    environment:
+        - SA_PASSWORD=Password123
+        - ACCEPT_EULA=Y
+    ports:
+        - "5434:1433"
