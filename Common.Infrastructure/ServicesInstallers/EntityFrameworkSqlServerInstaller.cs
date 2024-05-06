@@ -27,5 +27,6 @@ public sealed class EntityFrameworkSqlServerInstaller<TContext> : IServiceInstal
                 cfg.EnableSensitiveDataLogging(databaseOptions.EnableSensitiveDataLogging);
             }).LogTo(s => System.Diagnostics.Debug.WriteLine(s));
         });
+        
     }
 }

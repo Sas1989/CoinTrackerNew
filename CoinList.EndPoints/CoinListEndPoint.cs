@@ -1,7 +1,6 @@
 ﻿
 using CoinList.Application.CoinUseCases.Create;
 using Common.Application.Sender;
-using Microsoft.AspNetCore.Cors.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CoinList.EndPoints
@@ -29,6 +28,9 @@ namespace CoinList.EndPoints
 
             return Ok(result.Value);
         }
+
+        [HttpGet]
+        public IActionResult GetAsync() => Ok();
 
     }
 }
