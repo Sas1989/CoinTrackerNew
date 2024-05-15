@@ -3,7 +3,9 @@ using Ductus.FluentDocker.Builders;
 using Ductus.FluentDocker.Services;
 using Ductus.FluentDocker.Services.Extensions;
 using Microsoft.Data.SqlClient;
+using NUnit.Framework;
 using System.Data.Common;
+using System.Diagnostics;
 using System.Net;
 using TechTalk.SpecFlow.Infrastructure;
 
@@ -19,14 +21,19 @@ internal static class DockerComposeHook
     private static string GetComposeFilePath()
     {
         var fullPath = Path.Combine(Directory.GetCurrentDirectory(), DockerComposeFileName);
-        while(!File.Exists(fullPath))
+        var i = 0;
+        while(!File.Exists(fullPath) && i<100)
         {
             var parent = Directory.GetParent(Directory.GetCurrentDirectory()) 
                 ?? throw new FileNotFoundException($"{DockerComposeFileName} not found");
 
             Directory.SetCurrentDirectory(parent.FullName);
             fullPath = Path.Combine(Directory.GetCurrentDirectory(), DockerComposeFileName);
+            i++;
         }
+
+        if(!File.Exists(fullPath))
+            throw new FileNotFoundException($"{DockerComposeFileName} not found");
         return fullPath;
 
     }
