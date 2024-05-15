@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
   
   steps:
-    - users: actions/checkout@v4
+    - uses: actions/checkout@v4
 
     - name: Setup .NET
       users: actions/setup-dotnet@v4
