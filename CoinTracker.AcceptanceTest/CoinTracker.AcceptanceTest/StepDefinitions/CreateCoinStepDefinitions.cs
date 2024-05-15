@@ -9,7 +9,6 @@ namespace CoinTracker.AcceptanceTest.StepDefinitions;
 [Binding]
 internal sealed class CreateCoinStepDefinitions
 {
-    private readonly HttpClient _httpClient;
     private readonly ScenarioContext _scenarioContext;
     private readonly CoinService _coinService;
 
@@ -18,9 +17,8 @@ internal sealed class CreateCoinStepDefinitions
     private const string EXISTING_COIN_KEY = "ExistingCoin";
     private const string EXISTING_COIN_ID_KEY = "ExistingCoinId";
 
-    public CreateCoinStepDefinitions(HttpClient httpClient, ScenarioContext scenarioContext, CoinService coinService)
+    public CreateCoinStepDefinitions(ScenarioContext scenarioContext, CoinService coinService)
     {
-        _httpClient = httpClient;
         _scenarioContext = scenarioContext;
         _coinService = coinService;
     }
