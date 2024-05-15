@@ -32,7 +32,10 @@ jobs:
       
       - name: Acceptance test Restore
         run: dotnet restore ./CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest.sln 
+  
+      - name: Acceptance test Build
+        run: dotnet build ./CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest.sln --configuration Release --no-restore 
 
       - name: Acceptance test
-        run: dotnet test ./CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest.sln --configuration Release --no-restore
+        run: dotnet test ./CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest.sln --configuration Release --no-restore --no-build
       
