@@ -13,26 +13,26 @@ jobs:
   build:
     runs-on: ubuntu-latest
   
-  steps:
-    - uses: actions/checkout@v4
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup .NET
+        users: actions/setup-dotnet@v4
+        with:
+          dotnet-version: ${{env.DOTNET_VERSION}}
 
-    - name: Setup .NET
-      users: actions/setup-dotnet@v4
-      with:
-        dotnet-version: ${{env.DOTNET_VERSION}}
+      - name: Restore
+        run: dotnet restore ./CoinTrackerNew.sln
+      
+      - name: Build
+        run: dotnet build ./CoinTrackerNew.sln --configuration Release --no-restore
 
-    - name: Restore
-      run: dotnet restore ./CoinTrackerNew.sln
-    
-    - name: Build
-      run: dotnet build ./CoinTrackerNew.sln --configuration Release --no-restore
+      - name: Test
+        run: dotnet test ./CoinTrackerNew.sln --configuration Release --no-restore --no-build
+      
+      - name: Acceptance test Restore
+        run: dotnet restore ./CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest.sln 
 
-    - name: Test
-      run: dotnet test ./CoinTrackerNew.sln --configuration Release --no-restore --no-build
-    
-    - name: Acceptance test Restore
-      run: dotnet restore ./CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest.sln 
-
-    - name: Acceptance test
-      run: dotnet test ./CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest.sln --configuration Release --no-restore
-    
+      - name: Acceptance test
+        run: dotnet test ./CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest.sln --configuration Release --no-restore
+      
