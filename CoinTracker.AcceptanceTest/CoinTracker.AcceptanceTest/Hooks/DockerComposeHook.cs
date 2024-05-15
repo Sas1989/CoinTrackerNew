@@ -41,6 +41,7 @@ internal static class DockerComposeHook
     [BeforeTestRun]
     public static async Task StartDockerComposeAsync(TestThreadContext testContext) 
     {
+        Console.WriteLine("arrivo qui");
         CreateAndStartContainer(testContext);
         await CreateConnectionToSqlContinaerAsync(testContext);
 
