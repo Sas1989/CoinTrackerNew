@@ -22,17 +22,19 @@ internal static class DockerComposeHook
     {
         var fullPath = Path.Combine(Directory.GetCurrentDirectory(), DockerComposeFileName);
         var i = 0;
-        while(!File.Exists(fullPath) && i<100)
+        Console.WriteLine(fullPath);
+        while (!File.Exists(fullPath) && i<100)
         {
             var parent = Directory.GetParent(Directory.GetCurrentDirectory()) 
                 ?? throw new FileNotFoundException($"{DockerComposeFileName} not found");
 
             Directory.SetCurrentDirectory(parent.FullName);
             fullPath = Path.Combine(Directory.GetCurrentDirectory(), DockerComposeFileName);
+            Console.WriteLine(fullPath);
             i++;
         }
-
-        if(!File.Exists(fullPath))
+        Console.WriteLine("trovato" + fullPath);
+        if (!File.Exists(fullPath))
             throw new FileNotFoundException($"{DockerComposeFileName} not found");
         return fullPath;
 
@@ -41,7 +43,6 @@ internal static class DockerComposeHook
     [BeforeTestRun]
     public static async Task StartDockerComposeAsync(TestThreadContext testContext) 
     {
-        Console.WriteLine("arrivo qui");
         CreateAndStartContainer(testContext);
         await CreateConnectionToSqlContinaerAsync(testContext);
 
