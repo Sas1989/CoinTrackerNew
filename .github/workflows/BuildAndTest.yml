@@ -1,0 +1,38 @@
+name: BuildAndTest
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+env:
+  DOTNET_VERSION: "8.x"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+  
+  steps:
+    - users: actions/checkout@v4
+
+    - name: Setup .NET
+      users: actions/setup-dotnet@v4
+      with:
+        dotnet-version: ${{env.DOTNET_VERSION}}
+
+    - name: Restore
+      run: dotnet restore ./CoinTrackerNew.sln
+    
+    - name: Build
+      run: dotnet build ./CoinTrackerNew.sln --configuration Release --no-restore
+
+    - name: Test
+      run: dotnet test ./CoinTrackerNew.sln --configuration Release --no-restore --no-build
+    
+    - name: Acceptance test Restore
+      run: dotnet restore ./CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest.sln 
+
+    - name: Acceptance test
+      run: dotnet test ./CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest.sln --configuration Release --no-restore
+    
