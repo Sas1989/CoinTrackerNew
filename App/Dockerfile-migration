@@ -10,4 +10,4 @@ COPY . .
 # Esegui le migrazioni del database
 RUN dotnet tool install --global dotnet-ef
 ENV PATH="$PATH:/root/.dotnet/tools"
-CMD dotnet ef database update --project CoinList.Infrastrcture/CoinList.Infrastrcture.csproj --startup-project App/App.csproj
+RUN dotnet ef database update --project CoinList.Infrastrcture/CoinList.Infrastrcture.csproj --startup-project App/App.csproj
