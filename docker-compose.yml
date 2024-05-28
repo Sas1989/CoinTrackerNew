@@ -34,7 +34,7 @@ services:
     image: ${DOCKER_REGISTRY-}app-migration
     build:
       context: .
-      dockerfile: App/Dockerfile-migration
+      dockerfile: App/Migration/Dockerfile
     environment:
       - ConnectionStrings__Database=Server=cointracker.sql,1433;Database=CoinTracker;User=sa;Password=Password123;Encrypt=False
     depends_on:
