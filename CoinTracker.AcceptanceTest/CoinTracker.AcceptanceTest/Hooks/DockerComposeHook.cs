@@ -2,12 +2,8 @@
 using Ductus.FluentDocker.Builders;
 using Ductus.FluentDocker.Services;
 using Ductus.FluentDocker.Services.Extensions;
-using Microsoft.Data.SqlClient;
-using NUnit.Framework;
 using System.Data.Common;
-using System.Diagnostics;
 using System.Net;
-using TechTalk.SpecFlow.Infrastructure;
 
 namespace CoinTracker.AcceptanceTest.Hooks;
 
