@@ -71,11 +71,13 @@ internal static class DockerComposeHook
 
         var sqlContainer = GetCoinatinerByName(testContext, "sql");
 
+        var sqlAddress = GetEndPointFromPort(sqlContainer, "1433/tcp");
+
         var sqlPass = GetEnvVariableValue(sqlContainer,"SA_PASSWORD");
 
         var sqlConnectionString = new SqlConnectionStringBuilder
         {
-            DataSource = $"localhost",
+            DataSource = $"localhost,{sqlAddress.Port}",
             UserID = "sa",
             Password = sqlPass,
             InitialCatalog = "CoinTracker",
