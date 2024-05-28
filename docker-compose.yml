@@ -22,7 +22,7 @@ services:
       context: .
       dockerfile: App/Dockerfile
     environment:
-      - ConnectionStrings__Database=Server=cointracker.sql,1433;Database=CoinTracker;User=sa;Password=Password123;Encrypt=False
+      - ConnectionStrings__Database=Server=cointracker.sql;Database=CoinTracker;User=sa;Password=Password123;Encrypt=False
     depends_on:
         app.migration:
             condition: service_completed_successfully
@@ -36,7 +36,7 @@ services:
       context: .
       dockerfile: App/Migration/Dockerfile
     environment:
-      - ConnectionStrings__Database=Server=cointracker.sql,1433;Database=CoinTracker;User=sa;Password=Password123;Encrypt=False
+      - ConnectionStrings__Database=Server=cointracker.sql;Database=CoinTracker;User=sa;Password=Password123;Encrypt=False
     depends_on:
         cointracker.sql:
             condition: service_healthy
