@@ -82,7 +82,7 @@ internal static class DockerComposeHook
             Password = sqlPass,
             InitialCatalog = "CoinTracker",
             Encrypt = false,
-            ConnectTimeout = 30,
+            ConnectTimeout = 60,
             TrustServerCertificate = true,
             MultiSubnetFailover = true
         }.ConnectionString;
