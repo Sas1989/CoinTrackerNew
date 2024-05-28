@@ -2,6 +2,7 @@
 using Ductus.FluentDocker.Builders;
 using Ductus.FluentDocker.Services;
 using Ductus.FluentDocker.Services.Extensions;
+using Microsoft.Data.SqlClient;
 using System.Data.Common;
 using System.Net;
 
@@ -70,20 +71,18 @@ internal static class DockerComposeHook
 
         var sqlContainer = GetCoinatinerByName(testContext, "sql");
 
-        var sqlAddress = GetEndPointFromPort(sqlContainer, "1433/tcp");
-
         var sqlPass = GetEnvVariableValue(sqlContainer,"SA_PASSWORD");
 
         var sqlConnectionString = new SqlConnectionStringBuilder
         {
-            DataSource = $"127.0.0.1,{sqlAddress.Port}",
+            DataSource = $"localhost",
             UserID = "sa",
             Password = sqlPass,
             InitialCatalog = "CoinTracker",
             Encrypt = false,
             ConnectTimeout = 30,
             TrustServerCertificate = true,
-            MultiSubnetFailover = true,
+            MultiSubnetFailover = true
         }.ConnectionString;
 
         var dbConnection = new SqlConnection(sqlConnectionString);
