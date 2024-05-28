@@ -80,13 +80,14 @@ internal static class DockerComposeHook
 
         var sqlConnectionString = new SqlConnectionStringBuilder
         {
-            DataSource = $"127.0.0.1,{sqlAddress.Port}",
+            DataSource = $"{sqlAddress.Address},{sqlAddress.Port}",
             UserID = "sa",
             Password = sqlPass,
             InitialCatalog = "CoinTracker",
             Encrypt = false,
             ConnectTimeout = 30,
-            TrustServerCertificate = true
+            TrustServerCertificate = true,
+            MultiSubnetFailover = true,
         }.ConnectionString;
 
         var dbConnection = new SqlConnection(sqlConnectionString);
