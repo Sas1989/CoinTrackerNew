@@ -16,3 +16,17 @@ services:
         timeout: 3s
         retries: 10
         start_period: 10s
+   app:
+    image: ${DOCKER_REGISTRY-}app
+    build:
+      context: .
+      dockerfile: App/Dockerfile
+    environment:
+      - ConnectionStrings__Database=Server=cointracker.sql,1433;Database=CoinTracker;User=sa;Password=Password123;Encrypt=False
+    depends_on:
+        app.migration:
+            condition: service_completed_successfully
+    ports:
+        - "8080:8080"
+    networks:
+        - cointracker
