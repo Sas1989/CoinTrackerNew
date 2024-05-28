@@ -4,8 +4,9 @@ services:
    cointracker.sql:
     image: mcr.microsoft.com/mssql/server
     environment:
-        - SA_PASSWORD=Password123
+        - MSSQL_SA_PASSWORD=Password123
         - ACCEPT_EULA=Y
+        - MSSQL_PID='Developer'
     ports:
         - "5435:1433"
     networks:
