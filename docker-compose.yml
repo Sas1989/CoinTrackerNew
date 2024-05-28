@@ -30,3 +30,17 @@ services:
         - "8080:8080"
     networks:
         - cointracker
+   app.migration:
+    image: ${DOCKER_REGISTRY-}app-migration
+    build:
+      context: .
+      dockerfile: App/Dockerfile-migration
+    environment:
+      - ConnectionStrings__Database=Server=cointracker.sql,1433;Database=CoinTracker;User=sa;Password=Password123;Encrypt=False
+    depends_on:
+        cointracker.sql:
+            condition: service_healthy
+    networks:
+        - cointracker
+networks:
+  cointracker:
