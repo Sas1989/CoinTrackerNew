@@ -15,4 +15,13 @@ public static class ServiceInstaller
 
         return services;
     }
+
+    public static IServiceProvider RunAdditionlService<T>(this IServiceProvider serviceProvider, Assembly assembly, IConfiguration configuration) where T : IAdditionalService
+    {
+        var provider = InstallerHelper.GetService<T>();
+
+        provider.Run(serviceProvider,assembly, configuration);
+
+        return serviceProvider;
+    }
 }

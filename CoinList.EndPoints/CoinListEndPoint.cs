@@ -2,6 +2,7 @@
 using CoinList.Application.CoinUseCases.Create;
 using Common.Application.Sender;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace CoinList.EndPoints
 {
@@ -10,10 +11,12 @@ namespace CoinList.EndPoints
     public class CoinListEndPoint : ControllerBase
     {
         private readonly IDispatcher dispatcher;
+        private readonly ILogger<CoinListEndPoint> logger;
 
-        public CoinListEndPoint(IDispatcher dispatcher)
+        public CoinListEndPoint(IDispatcher dispatcher, ILogger<CoinListEndPoint> logger)
         {
             this.dispatcher = dispatcher;
+            this.logger = logger;
         }
 
         [HttpPost]
@@ -25,6 +28,8 @@ namespace CoinList.EndPoints
             {
                 return BadRequest(result.Error);
             }
+
+            logger.LogInformation("Coin created: {CoinId}", result.Value);
 
             return Ok(result.Value);
         }

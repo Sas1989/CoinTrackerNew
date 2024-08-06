@@ -8,6 +8,7 @@ using Common.Infrastructure.ServicesInstallers;
 using Common.Infrastructure.Persistance;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Common.Infrastructure.AdditionalService;
 
 namespace CoinList.Infrastrcture;
 
@@ -18,12 +19,18 @@ public sealed class CoinListInstaller : IApplicationInstaller
         services.InstallService<DispatcherInstaller>(Application.AssemblyReference.Assembly, configuration);
         services.InstallService<EndpointServiceInstaller>(EndPoints.AssemblyReference.Assembly, configuration);
         services.InstallService<EntityFrameworkSqlServerInstaller<CoinListDbContext>>(AssemblyReference.Assembly, configuration);
-        InstallRepository(services, configuration);
+        services.InstallService<OpenTelemetryServiceInstaller>(AssemblyReference.Assembly, configuration);
+        InstallRepository(services);
     }
 
-    private static void InstallRepository(IServiceCollection services, IConfiguration configuration)
+    private static void InstallRepository(IServiceCollection services)
     {
         services.AddScoped<ICoinRepository, CoinRepositoryEF>();
         services.AddScoped<IUnitOfWork, UnitOfWork<CoinListDbContext>>();
+    }
+
+    public void RunAdditionalService(IServiceProvider serviceProvider, IConfiguration configuration)
+    {
+        serviceProvider.RunAdditionlService<EntityFrameworkMigrationExecute<CoinListDbContext>>(Application.AssemblyReference.Assembly, configuration);
     }
 }

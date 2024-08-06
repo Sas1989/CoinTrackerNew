@@ -18,4 +18,15 @@ public static class ApplicatonInstaller
 
         return services;
     }
+
+    public static IServiceProvider RunAdditionalServices(this IServiceProvider serviceProvider, IConfiguration configuration, params Assembly[] assemblies) { 
+        var services = InstallerHelper.GetInstallers<IApplicationInstaller>(assemblies);
+
+        foreach (var service in services)
+        {
+            service.RunAdditionalService(serviceProvider, configuration);   
+        }
+
+        return serviceProvider;
+    }
 }

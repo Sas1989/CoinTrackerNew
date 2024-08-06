@@ -1,21 +1,52 @@
 version: '3.4'
 
 services:
-   cointracker.sql:
-    image: mcr.microsoft.com/mssql/server
+   cointracker.api:
+    image: ${DOCKER_REGISTRY-}cointracker.api
+    container_name: cointracker.api
+    build:
+      context: .
+      dockerfile: App/Dockerfile
     environment:
-        - MSSQL_SA_PASSWORD=Password123
-        - ACCEPT_EULA=Y
-        - MSSQL_PID='Developer'
+        - ConnectionStrings__Database=Server=cointracker.sql,1433;Database=CoinTracker;User Id=sa;Password=1StrongPwd!!;TrustServerCertificate=True;
+        - OTEL_EXPORTER_OTLP_ENDPOINT=http://cointracker.dashboard:18889
     ports:
-        - "5435:1433"
+        - "8080:8080"
     networks:
     - cointracker
+
+
+   cointracker.sql:
+    image: mcr.microsoft.com/mssql/server:latest
+    container_name: cointracker.sql
+    environment:
+        - MSSQL_SA_PASSWORD=1StrongPwd!!
+        - ACCEPT_EULA=Y
+    ports:
+        - "5435:1433"
     healthcheck:
         test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "$$SA_PASSWORD" -Q "SELECT 1" || exit 1
         interval: 10s
         timeout: 3s
         retries: 10
         start_period: 10s
+    networks:
+    - cointracker
+    volumes:
+    - cointracker-db:/var/opt/mssql
+
+
+   cointracker.dashboard:
+    image: mcr.microsoft.com/dotnet/aspire-dashboard:latest
+    container_name: cointracker.dashboard
+    ports:
+        - "18888:18888"
+        - "18889:18889"
+    networks:
+    - cointracker
+
 networks:
   cointracker:
+
+volumes:
+    cointracker-db:

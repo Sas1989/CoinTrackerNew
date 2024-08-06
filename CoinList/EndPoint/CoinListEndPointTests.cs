@@ -1,21 +1,25 @@
-﻿using CoinList.Application.CoinUseCases.Create;
+﻿using Castle.Core.Logging;
+using CoinList.Application.CoinUseCases.Create;
 using CoinList.EndPoints;
 using Common.Application.Sender;
 using Common.Domain;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace CoinList.Tests.EndPoint;
 
 public class CoinListEndPointTests
 {
-    private IDispatcher dispatcher;
-    private CoinListEndPoint endPoint;
-    private CreateCoinCommand createCommand;
+    private readonly IDispatcher dispatcher;
+    private readonly CoinListEndPoint endPoint;
+    private readonly CreateCoinCommand createCommand;
+    private readonly ILogger<CoinListEndPoint> logger;
 
     public CoinListEndPointTests()
     {
         dispatcher = Substitute.For<IDispatcher>();
-        endPoint = new CoinListEndPoint(dispatcher);
+        logger = Substitute.For<ILogger<CoinListEndPoint>>();
+        endPoint = new CoinListEndPoint(dispatcher,logger);
 
         createCommand = new CreateCoinCommand("BTC", "Bitcoin", 1000);
     }

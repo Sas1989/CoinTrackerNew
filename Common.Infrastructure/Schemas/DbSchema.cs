@@ -2,5 +2,5 @@
 
 public static class DbSchema
 {
-    public static string CoinList = "CoinList";
+    public static readonly string CoinList = "CoinList";
 }

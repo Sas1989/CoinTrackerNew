@@ -1,0 +1,41 @@
+version: '3.4'
+
+services:
+   cointracker.api.test:
+    image: ${DOCKER_REGISTRY-}cointracker.api
+    container_name: cointracker.api.test
+    build:
+      context: .
+      dockerfile: App/Dockerfile
+    environment:
+        - ConnectionStrings__Database=Server=cointracker.sql.test,1433;Database=CoinTracker;User Id=sa;Password=1TestPwd!!;TrustServerCertificate=True;
+    ports:
+        - "28080:8080"
+    networks:
+    - cointracker.test
+
+
+   cointracker.sql.test:
+    image: mcr.microsoft.com/mssql/server:latest
+    container_name: cointracker.sql.test
+    environment:
+        - MSSQL_SA_PASSWORD=1TestPwd!!
+        - ACCEPT_EULA=Y
+    ports:
+        - "21433:1433"
+    healthcheck:
+        test: /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P "$$SA_PASSWORD" -Q "SELECT 1" || exit 1
+        interval: 10s
+        timeout: 3s
+        retries: 10
+        start_period: 10s
+    networks:
+    - cointracker.test
+    volumes:
+    - cointracker-db.test:/var/opt/mssql
+
+networks:
+  cointracker.test:
+
+volumes:
+    cointracker-db.test:

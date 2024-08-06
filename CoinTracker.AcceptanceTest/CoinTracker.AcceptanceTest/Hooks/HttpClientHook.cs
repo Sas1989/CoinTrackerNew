@@ -6,7 +6,7 @@ namespace CoinTracker.AcceptanceTest.Hooks;
 [Binding]
 internal sealed class HttpClientHook
 {
-    private IObjectContainer _objectContainer;
+    private readonly IObjectContainer _objectContainer;
 
     public HttpClientHook(IObjectContainer objectContainer)
     {
@@ -16,7 +16,7 @@ internal sealed class HttpClientHook
     [BeforeScenario]
     public void CreateHttpClient()
     {
-        var httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:8080") };
+        var httpClient = new HttpClient { BaseAddress = new Uri("http://localhost:28080") };
        
        _objectContainer.RegisterInstanceAs(httpClient);
     }
