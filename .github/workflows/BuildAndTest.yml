@@ -20,7 +20,10 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{env.DOTNET_VERSION}}
-
+          
+      - name: Check Docker Compose version
+        run: docker compose version
+        
       - name: Restore
         run: dotnet restore ./CoinTrackerNew.sln
       
