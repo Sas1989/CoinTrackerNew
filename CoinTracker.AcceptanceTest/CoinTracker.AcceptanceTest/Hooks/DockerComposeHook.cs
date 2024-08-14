@@ -12,7 +12,7 @@ namespace CoinTracker.AcceptanceTest.Hooks;
 internal static class DockerComposeHook
 {
     private static readonly string ComposeFilePath = GetComposeFilePath();
-    private const string DockerComposeFileName = "docker-compose-test.yml";
+    private const string DockerComposeFileName = "docker-compose.yml";
     private const string ContainerBuilder = "ContainerBuilder";
 
     private static string GetComposeFilePath()
