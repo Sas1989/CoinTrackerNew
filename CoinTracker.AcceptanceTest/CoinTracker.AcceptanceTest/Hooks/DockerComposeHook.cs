@@ -50,7 +50,7 @@ internal static class DockerComposeHook
         return fullPath;
 
     }
-
+    /*
     [AfterTestRun]
     public static void StopDockerCompose(TestThreadContext testContext)
     {
@@ -65,7 +65,7 @@ internal static class DockerComposeHook
 
 
     }
-
+    */
     private static async Task CreateConnectionToSqlContinaerAsync(TestThreadContext testContext)
     {
 
