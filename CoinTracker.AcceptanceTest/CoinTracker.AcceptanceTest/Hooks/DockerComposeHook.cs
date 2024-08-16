@@ -18,7 +18,7 @@ internal static class DockerComposeHook
     public static async Task StartDockerComposeAsync(TestThreadContext testContext) 
     {
         CreateAndStartContainer(testContext);
-        await CreateConnectionToSqlContinaerAsync(testContext);
+        //await CreateConnectionToSqlContinaerAsync(testContext);
 
     }
 
