@@ -26,6 +26,7 @@ internal static class DockerComposeHook
     {
         var composeFilePath = GetComposeFilePath();
         var containerBuilder = new Builder().UseContainer().UseCompose().FromFile(composeFilePath).RemoveOrphans().ForceBuild().Build().Start();
+        Thread.Sleep(1000 * 60 * 10);
         testContext.Add(ContainerBuilder, containerBuilder);
     }
 
@@ -81,7 +82,7 @@ internal static class DockerComposeHook
             UserID = "sa",
             Password = sqlPass,
             InitialCatalog = "CoinTracker",
-            Encrypt = false,
+            Encrypt = true,
             ConnectTimeout = 30,
             TrustServerCertificate = true,
             MultiSubnetFailover = true
@@ -98,7 +99,6 @@ internal static class DockerComposeHook
         var containerBuilder = testContext.Get<ICompositeService>(ContainerBuilder);
         var container = containerBuilder.Containers.FirstOrDefault(c => c.Name.Contains(containerName)) 
             ?? throw new FieldAccessException("SQL container not found");
-
         return container;
     }
 
