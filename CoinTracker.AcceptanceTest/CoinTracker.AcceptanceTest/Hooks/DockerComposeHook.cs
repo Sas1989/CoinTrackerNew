@@ -50,7 +50,7 @@ internal static class DockerComposeHook
         return fullPath;
 
     }
-    /*
+   
     [AfterTestRun]
     public static void StopDockerCompose(TestThreadContext testContext)
     {
@@ -65,7 +65,7 @@ internal static class DockerComposeHook
 
 
     }
-    */
+   
     private static async Task CreateConnectionToSqlContinaerAsync(TestThreadContext testContext)
     {
 
@@ -87,11 +87,10 @@ internal static class DockerComposeHook
             MultiSubnetFailover = true
         }.ConnectionString;
 
-        /*var dbConnection = new SqlConnection(sqlConnectionString);
+        var dbConnection = new SqlConnection(sqlConnectionString);
         await dbConnection.OpenAsync();
 
-        testContext.Add(TestContainerKeys.DbConnection, dbConnection);*/
-        return Task.FromResult<object>(null);
+        testContext.Add(TestContainerKeys.DbConnection, dbConnection);
     }
 
     private static IContainerService GetCoinatinerByName(TestThreadContext testContext,string containerName)
