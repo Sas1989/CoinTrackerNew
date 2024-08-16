@@ -10,11 +10,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Check Docker Compose path
-        run: which docker-compose
-
-      - name: Set Docker Compose path environment variable
-        run: echo "DOCKER_COMPOSE_PATH=$(which docker-compose)" >> $GITHUB_ENV
+      - name: Add Docker Compose to PATH
+        run: echo "/usr/local/bin" >> $GITHUB_PATH
 
       - name: Check Docker Compose version
         run: docker-compose --version
