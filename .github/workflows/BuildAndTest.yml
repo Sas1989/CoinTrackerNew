@@ -51,5 +51,5 @@ jobs:
         run: dotnet test ./CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest.sln --configuration Release --no-restore --no-build
       
       - name: Show SQL Server logs (if needed)
-        run: docker logs
+        run: docker logs cointracker.sql.test
         if: failure()
