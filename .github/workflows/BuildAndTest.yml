@@ -50,7 +50,6 @@ jobs:
       - name: Acceptance test
         run: dotnet test ./CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest.sln --configuration Release --no-restore --no-build
       
-      - name: Show SQL Server logs (if needed)
       - name: Wait for SQL Server to be ready
         run: |
           until docker exec cointracker.sql.test /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P 1TestPwd!! -Q "SELECT 1" > /dev/null 2>&1 ; do
