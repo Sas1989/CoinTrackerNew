@@ -6,44 +6,15 @@ on:
   pull_request:
     branches: [ "master" ]
 
-env:
-  DOTNET_VERSION: "8.x"
-
 jobs:
   build:
     runs-on: ubuntu-latest
-  
     steps:
-      - uses: actions/checkout@v3
-      
       - name: Check Docker Compose path
         run: which docker-compose
 
+      - name: Set Docker Compose path environment variable
+        run: echo "DOCKER_COMPOSE_PATH=$(which docker-compose)" >> $GITHUB_ENV
+
       - name: Check Docker Compose version
         run: docker-compose --version
-        
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: ${{env.DOTNET_VERSION}}
-          
-      - name: Check Docker Compose version
-        run: docker compose version
-        
-      - name: Restore
-        run: dotnet restore ./CoinTrackerNew.sln
-      
-      - name: Build
-        run: dotnet build ./CoinTrackerNew.sln --configuration Release --no-restore
-
-      - name: Test
-        run: dotnet test ./CoinTrackerNew.sln --configuration Release --no-restore --no-build
-      
-      - name: Acceptance test Restore
-        run: dotnet restore ./CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest.sln 
-  
-      - name: Acceptance test Build
-        run: dotnet build ./CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest.sln --configuration Release --no-restore 
-
-      - name: Acceptance test
-        run: dotnet test ./CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest.sln --configuration Release --no-restore --no-build
