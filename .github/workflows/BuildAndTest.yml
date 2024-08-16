@@ -16,6 +16,14 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       
+      - name: Check Docker Compose path
+        run: which docker-compose
+
+      - name: Set Docker Compose path environment variable
+        run: echo "DOCKER_COMPOSE_PATH=$(which docker-compose)" >> $GITHUB_ENV
+
+      - name: Check Docker Compose version
+        run: docker-compose --version
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
