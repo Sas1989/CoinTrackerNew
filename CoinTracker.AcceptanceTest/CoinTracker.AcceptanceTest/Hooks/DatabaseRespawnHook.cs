@@ -11,12 +11,12 @@ using System.Data.Common;
 
 namespace CoinTracker.AcceptanceTest.Hooks;
 
-[Binding]
+//[Binding]
 internal sealed class DatabaseRespawnHook 
 {
     private readonly string[] SchemasList = new[] { "CoinList" };
     private const string RespawnerKey = "respawner";
-
+    /*
     [BeforeScenario]
     public async Task SetRespawnAsync(TestThreadContext testContext)
     {
@@ -47,5 +47,5 @@ internal sealed class DatabaseRespawnHook
             await dbConnection.OpenAsync();
 
         return dbConnection;
-    }
+    }*/
 }

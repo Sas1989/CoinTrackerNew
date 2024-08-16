@@ -18,7 +18,7 @@ internal static class DockerComposeHook
     public static async Task StartDockerComposeAsync(TestThreadContext testContext) 
     {
         CreateAndStartContainer(testContext);
-        //await CreateConnectionToSqlContinaerAsync(testContext);
+        await CreateConnectionToSqlContinaerAsync(testContext);
 
     }
 
@@ -87,10 +87,10 @@ internal static class DockerComposeHook
             MultiSubnetFailover = true
         }.ConnectionString;
 
-        var dbConnection = new SqlConnection(sqlConnectionString);
+        /*var dbConnection = new SqlConnection(sqlConnectionString);
         await dbConnection.OpenAsync();
 
-        testContext.Add(TestContainerKeys.DbConnection, dbConnection);
+        testContext.Add(TestContainerKeys.DbConnection, dbConnection);*/
     }
 
     private static IContainerService GetCoinatinerByName(TestThreadContext testContext,string containerName)
