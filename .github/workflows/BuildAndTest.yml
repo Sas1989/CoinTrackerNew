@@ -10,6 +10,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Check Docker Compose version
+        run: docker-compose --version
+        
       - name: Add Docker Compose to PATH
         run: echo "/usr/local/bin" >> $GITHUB_PATH
 
