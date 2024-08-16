@@ -11,7 +11,7 @@ namespace CoinTracker.AcceptanceTest.Hooks;
 [Binding]
 internal static class DockerComposeHook
 {
-    private const string DockerComposeFileName = "docker-compose.yml";
+    private const string DockerComposeFileName = "docker-compose-test.yml";
     private const string ContainerBuilder = "ContainerBuilder";
 
     [BeforeTestRun]
@@ -81,7 +81,7 @@ internal static class DockerComposeHook
             UserID = "sa",
             Password = sqlPass,
             InitialCatalog = "CoinTracker",
-            Encrypt = true,
+            Encrypt = false,
             ConnectTimeout = 30,
             TrustServerCertificate = true,
             MultiSubnetFailover = true
