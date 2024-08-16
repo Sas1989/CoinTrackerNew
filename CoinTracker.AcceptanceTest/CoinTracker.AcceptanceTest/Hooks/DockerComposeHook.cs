@@ -11,18 +11,32 @@ namespace CoinTracker.AcceptanceTest.Hooks;
 [Binding]
 internal static class DockerComposeHook
 {
-    private static readonly string ComposeFilePath = GetComposeFilePath();
     private const string DockerComposeFileName = "docker-compose.yml";
     private const string ContainerBuilder = "ContainerBuilder";
+
+    [BeforeTestRun]
+    public static async Task StartDockerComposeAsync(TestThreadContext testContext) 
+    {
+        CreateAndStartContainer(testContext);
+        await CreateConnectionToSqlContinaerAsync(testContext);
+
+    }
+
+    private static void CreateAndStartContainer(TestThreadContext testContext)
+    {
+        var composeFilePath = GetComposeFilePath();
+        var containerBuilder = new Builder().UseContainer().UseCompose().FromFile(composeFilePath).RemoveOrphans().ForceBuild().Build().Start();
+        testContext.Add(ContainerBuilder, containerBuilder);
+    }
 
     private static string GetComposeFilePath()
     {
         var fullPath = Path.Combine(Directory.GetCurrentDirectory(), DockerComposeFileName);
         var i = 0;
         Console.WriteLine(fullPath);
-        while (!File.Exists(fullPath) && i<100)
+        while (!File.Exists(fullPath) && i < 100)
         {
-            var parent = Directory.GetParent(Directory.GetCurrentDirectory()) 
+            var parent = Directory.GetParent(Directory.GetCurrentDirectory())
                 ?? throw new FileNotFoundException($"{DockerComposeFileName} not found");
 
             Directory.SetCurrentDirectory(parent.FullName);
@@ -37,24 +51,10 @@ internal static class DockerComposeHook
 
     }
 
-    [BeforeTestRun]
-    public static async Task StartDockerComposeAsync(TestThreadContext testContext) 
-    {
-        CreateAndStartContainer(testContext);
-        await CreateConnectionToSqlContinaerAsync(testContext);
-
-    }
-
-    private static void CreateAndStartContainer(TestThreadContext testContext)
-    {
-        var containerBuilder = new Builder().UseContainer().UseCompose().FromFile(ComposeFilePath).RemoveOrphans().ForceBuild().Build().Start();
-        testContext.Add(ContainerBuilder, containerBuilder);
-    }
-
     [AfterTestRun]
     public static void StopDockerCompose(TestThreadContext testContext)
     {
-        var dbConnection = testContext.Get<DbConnection>();
+        var dbConnection = testContext.Get<DbConnection>(TestContainerKeys.DbConnection);
         dbConnection.Close();
         dbConnection.Dispose();
 
