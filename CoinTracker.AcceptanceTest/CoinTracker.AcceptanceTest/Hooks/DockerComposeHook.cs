@@ -91,6 +91,7 @@ internal static class DockerComposeHook
         await dbConnection.OpenAsync();
 
         testContext.Add(TestContainerKeys.DbConnection, dbConnection);*/
+        return Task.FromResult<object>(null);
     }
 
     private static IContainerService GetCoinatinerByName(TestThreadContext testContext,string containerName)
