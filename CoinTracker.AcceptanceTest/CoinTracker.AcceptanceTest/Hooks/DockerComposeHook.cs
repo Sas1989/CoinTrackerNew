@@ -3,6 +3,7 @@ using Ductus.FluentDocker.Builders;
 using Ductus.FluentDocker.Services;
 using Ductus.FluentDocker.Services.Extensions;
 using Microsoft.Data.SqlClient;
+using System.Data;
 using System.Data.Common;
 using System.Net;
 
@@ -41,10 +42,9 @@ internal static class DockerComposeHook
 
             Directory.SetCurrentDirectory(parent.FullName);
             fullPath = Path.Combine(Directory.GetCurrentDirectory(), DockerComposeFileName);
-            Console.WriteLine(fullPath);
             i++;
         }
-        Console.WriteLine("trovato" + fullPath);
+
         if (!File.Exists(fullPath))
             throw new FileNotFoundException($"{DockerComposeFileName} not found");
         return fullPath;
@@ -54,15 +54,18 @@ internal static class DockerComposeHook
     [AfterTestRun]
     public static void StopDockerCompose(TestThreadContext testContext)
     {
-        var dbConnection = testContext.Get<DbConnection>(TestContainerKeys.DbConnection);
-        dbConnection.Close();
-        dbConnection.Dispose();
+        if(testContext.TryGetValue<DbConnection>(TestContainerKeys.DbConnection,out var dbConnection))
+        {
+            dbConnection.Close();
+            dbConnection.Dispose();
+        }
 
-        var containerBuilder = testContext.Get<ICompositeService>(ContainerBuilder);
 
-        containerBuilder.Stop();
-        containerBuilder.Dispose();
-
+        if(testContext.TryGetValue<ICompositeService>(ContainerBuilder, out var containerBuilder))
+        {
+            containerBuilder.Stop();
+            containerBuilder.Dispose();
+        }
 
     }
    
