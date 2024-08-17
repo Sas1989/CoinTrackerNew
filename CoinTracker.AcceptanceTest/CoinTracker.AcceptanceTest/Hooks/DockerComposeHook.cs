@@ -76,7 +76,7 @@ internal static class DockerComposeHook
 
         var sqlAddress = GetEndPointFromPort(sqlContainer, "1433/tcp");
 
-        var sqlPass = GetEnvVariableValue(sqlContainer,"SA_PASSWORD");
+        var sqlPass = GetEnvVariableValue(sqlContainer, "MSSQL_SA_PASSWORD");
 
         var sqlConnectionString = new SqlConnectionStringBuilder
         {
