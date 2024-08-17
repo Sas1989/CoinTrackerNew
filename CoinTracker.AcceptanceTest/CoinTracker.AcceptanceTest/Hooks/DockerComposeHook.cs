@@ -27,7 +27,7 @@ internal static class DockerComposeHook
     {
         var composeFilePath = GetComposeFilePath();
         var containerBuilder = new Builder().UseContainer().UseCompose().FromFile(composeFilePath).RemoveOrphans().ForceBuild().Build().Start();
-        Thread.Sleep(60 * 1000);
+        Thread.Sleep(30 * 1000);
         testContext.Add(ContainerBuilder, containerBuilder);
     }
 
