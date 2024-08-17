@@ -11,6 +11,9 @@ services:
         - ConnectionStrings__Database=Server=cointracker.sql.test,1433;Database=CoinTracker;User Id=sa;Password=1TestPwd!!;TrustServerCertificate=True;
     ports:
         - "28080:8080"
+    depends_on:
+        cointracker.sql.test:
+            condition: service_healthy
     networks:
     - cointracker.test
 
@@ -24,11 +27,11 @@ services:
     ports:
         - "21433:1433"
     healthcheck:
-        test: /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P "$$MSSQL_SA_PASSWORD" -Q "SELECT 1" || exit 1
-        interval: 10s
-        timeout: 3s
-        retries: 10
-        start_period: 10s
+      test: /opt/mssql-tools18/bin/sqlcmd -C -S localhost -U sa -P 1TestPwd!! -Q "SELECT 1" || exit 1
+      interval: 10s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
     networks:
     - cointracker.test
     volumes:
