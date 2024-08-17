@@ -26,7 +26,7 @@ internal static class DockerComposeHook
     private static void CreateAndStartContainer(TestThreadContext testContext)
     {
         var composeFilePath = GetComposeFilePath();
-        var containerBuilder = new Builder().UseContainer().UseCompose().FromFile(composeFilePath).RemoveOrphans().ForceBuild().WaitForPort("cointracker.api.test", "8080/tcp").Build().Start();
+        var containerBuilder = new Builder().UseContainer().UseCompose().FromFile(composeFilePath).RemoveOrphans().ForceBuild().Build().Start();
         testContext.Add(ContainerBuilder, containerBuilder);
     }
 
@@ -83,7 +83,7 @@ internal static class DockerComposeHook
             DataSource = $"localhost,{sqlAddress.Port}",
             UserID = "sa",
             Password = sqlPass,
-            InitialCatalog = "CoinTracker",
+            //InitialCatalog = "CoinTracker",
             Encrypt = true,
             ConnectTimeout = 30,
             TrustServerCertificate = true,
