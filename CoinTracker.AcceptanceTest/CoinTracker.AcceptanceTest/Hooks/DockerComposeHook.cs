@@ -107,6 +107,7 @@ internal static class DockerComposeHook
     private static IPEndPoint GetEndPointFromPort(IContainerService container, string containerPort)
     {
         container.GetConfiguration(true);
+        container.WaitForPort(containerPort, Timeout.Infinite);
         return container.ToHostExposedEndpoint(containerPort);
     }
 
