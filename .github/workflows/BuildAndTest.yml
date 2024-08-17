@@ -29,9 +29,6 @@ jobs:
         with:
           dotnet-version: ${{env.DOTNET_VERSION}}
           
-      - name: Check Docker Compose version
-        run: docker compose version
-        
       - name: Restore
         run: dotnet restore ./CoinTrackerNew.sln
       
@@ -43,8 +40,3 @@ jobs:
 
       - name: Acceptance test
         run: dotnet test ./CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest.sln --configuration Release
-      
-      - name: Log error
-        run: |
-          docker logs cointracker.sql.test
-        if: failure()
