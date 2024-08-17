@@ -38,19 +38,13 @@ jobs:
       - name: Build
         run: dotnet build ./CoinTrackerNew.sln --configuration Release --no-restore
 
-      - name: Test
+      - name: Unit Test
         run: dotnet test ./CoinTrackerNew.sln --configuration Release --no-restore --no-build
-      
-      - name: Acceptance test Restore
-        run: dotnet restore ./CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest.sln 
-  
-      - name: Acceptance test Build
-        run: dotnet build ./CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest.sln --configuration Release --no-restore 
 
       - name: Acceptance test
-        run: dotnet test ./CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest.sln --configuration Release --no-restore --no-build
+        run: dotnet test ./CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest.sln --configuration Release
       
-      - name: Wait for SQL Server to be ready
+      - name: Log error
         run: |
-          docker exec cointracker.sql.test /opt/mssql-tools18/bin/sqlcmd -S localhost -U sa -P 1TestPwd!! -C -Q "SELECT 1" 
+          docker logs cointracker.sql.test
         if: failure()
