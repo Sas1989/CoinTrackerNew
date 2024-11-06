@@ -1,6 +1,7 @@
 ﻿using Common.Domain.Exceptions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Common.Infrastructure.Options;
 
@@ -16,13 +17,17 @@ internal sealed class DatabaseOptionSetup : IConfigureOptions<DatabaseOptions>
 
     public void Configure(DatabaseOptions options)
     {
-        var connection = _configuration.GetConnectionString("Database");
-        if (connection == null)
+
+        _configuration.GetSection("DatabseOptions").Bind(options);
+
+        if (options.Server.IsNullOrEmpty())
         {
-            throw new ConfigurationException("Database connection string not found");
+            throw new ConfigurationException("Server Cannot Be Empy");
         }
 
-        options.ConnectionString = connection;
-        _configuration.GetSection("DatabseOptions").Bind(options);
+        if (options.DatabaseName.IsNullOrEmpty())
+        {
+            throw new ConfigurationException("DatabaseName Cannot Be Empty");
+        }
     }
 }
