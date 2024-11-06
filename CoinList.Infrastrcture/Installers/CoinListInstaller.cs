@@ -1,6 +1,4 @@
 ﻿using CoinList.Domain.CoinEntity;
-using CoinList.Infrastrcture.Repository;
-using CoinList.Infrastrcture.ServicesInstallers;
 using Common.Application.Installers;
 using Common.Domain.Persistance;
 using Common.Infrastructure.Installers;
@@ -9,8 +7,9 @@ using Common.Infrastructure.Persistance;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Common.Infrastructure.AdditionalService;
+using CoinList.Infrastructure.Repository;
 
-namespace CoinList.Infrastrcture;
+namespace CoinList.Infrastructure.Installers;
 
 public sealed class CoinListInstaller : IApplicationInstaller
 {

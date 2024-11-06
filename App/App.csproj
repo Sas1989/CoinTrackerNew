@@ -19,7 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CoinList.Infrastrcture\CoinList.Infrastrcture.csproj" />
+    <ProjectReference Include="..\CoinList.Infrastrcture\CoinList.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

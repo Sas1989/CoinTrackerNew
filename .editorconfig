@@ -276,6 +276,15 @@ dotnet_diagnostic.CA1822.severity = none
 # CA2000: Dispose objects before losing scope
 dotnet_diagnostic.CA2000.severity = none
 
+# CA2000: 
+dotnet_diagnostic.CA2000.severity = none
+
+# S6605: 
+dotnet_diagnostic.S6605.severity = none
+
+
+# IDE0055: Fix formatting
+dotnet_diagnostic.IDE0055.severity = none
 
 [*.{cs,vb}]
 dotnet_style_operator_placement_when_wrapping = beginning_of_line

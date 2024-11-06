@@ -10,10 +10,13 @@ public abstract class Entity
     {
         Id = id;
     }
+    protected Entity() { }
 
     public void Raise(IDomainEvent domainEvent)
     {
         _domainEvents.Add(domainEvent);
     }
+
+
 
 }

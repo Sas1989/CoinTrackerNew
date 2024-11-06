@@ -3,9 +3,9 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
-namespace CoinList.Infrastrcture.ServicesInstallers;
+namespace Common.Infrastructure.ServicesInstallers;
 
-public class EndpointServiceInstaller : IServiceInstaller
+public sealed class EndpointServiceInstaller : IServiceInstaller
 {
     public void Install(IServiceCollection services, Assembly assembly, IConfiguration configuration)
     {

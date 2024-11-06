@@ -2,7 +2,7 @@
 using Common.Infrastructure.Schemas;
 using Microsoft.EntityFrameworkCore;
 
-namespace CoinList.Infrastrcture;
+namespace CoinList.Infrastructure;
 
 public class CoinListDbContext : DbContext
 {

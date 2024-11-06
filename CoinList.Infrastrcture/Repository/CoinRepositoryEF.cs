@@ -1,8 +1,9 @@
 ﻿using CoinList.Domain.CoinEntity;
 using CoinList.Domain.CoinEntity.ValueObjects;
+using CoinList.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
-namespace CoinList.Infrastrcture.Repository
+namespace CoinList.Infrastructure.Repository
 {
     internal sealed class CoinRepositoryEF : ICoinRepository
     {

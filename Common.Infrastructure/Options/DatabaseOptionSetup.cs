@@ -2,7 +2,7 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 
-namespace CoinList.Infrastrcture.Options;
+namespace Common.Infrastructure.Options;
 
 internal sealed class DatabaseOptionSetup : IConfigureOptions<DatabaseOptions>
 {
@@ -20,8 +20,8 @@ internal sealed class DatabaseOptionSetup : IConfigureOptions<DatabaseOptions>
         if (connection == null)
         {
             throw new ConfigurationException("Database connection string not found");
-        }   
-        
+        }
+
         options.ConnectionString = connection;
         _configuration.GetSection("DatabseOptions").Bind(options);
     }

@@ -2,7 +2,7 @@
 using CoinList.Domain.CoinEntity.ValueObjects;
 using Common.Domain;
 
-namespace CoinList.Domain.ValueObjects
+namespace CoinList.Tests.Domain.ValueObjects
 {
     public class SymbolTests
     {
@@ -15,7 +15,7 @@ namespace CoinList.Domain.ValueObjects
             Result<Symbol> result = Symbol.Create(symbol);
 
             Assert.True(result.IsFailure);
-            Assert.Equal(CoinError.SymbolIsEmpty,result.Error);
+            Assert.Equal(CoinError.SymbolIsEmpty, result.Error);
 
         }
 

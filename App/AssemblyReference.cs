@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace CoinList.Infrastructure;
+namespace App;
 
 public static class AssemblyReference
 {

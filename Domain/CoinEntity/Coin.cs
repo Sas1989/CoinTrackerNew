@@ -1,12 +1,12 @@
 ﻿using CoinList.Domain.CoinEntity.DomainEvents;
 using CoinList.Domain.CoinEntity.ValueObjects;
 using Common.Domain.DomainEntity;
-using System.ComponentModel;
 
 namespace CoinList.Domain.CoinEntity;
 
 public sealed class Coin : AuditAbleEntity
 {
+
     private Coin(Guid id, Symbol symbol, Name name, Price price) : base(id)
     {
         Symbol = symbol;

@@ -1,5 +1,5 @@
-﻿using CoinList.Infrastrcture.Options;
-using Common.Application.Installers;
+﻿using Common.Application.Installers;
+using Common.Infrastructure.Options;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
