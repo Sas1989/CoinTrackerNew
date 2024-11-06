@@ -15,11 +15,6 @@ jobs:
   
     steps:
       - uses: actions/checkout@v2
-      
-      - name: Install Docker Compose
-        run: |
-          sudo curl -L "https://github.com/docker/compose/releases/download/v2.20.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-          sudo chmod +x /usr/local/bin/docker-compose
 
       - name: Verify Docker Compose installation
         run: docker-compose --version
@@ -29,11 +24,11 @@ jobs:
         with:
           dotnet-version: ${{env.DOTNET_VERSION}}
 
-      - name: Install SonarScanner for MSBuild
-        run: |
-          curl -sSLo sonar-scanner-msbuild.exe https://github.com/SonarSource/sonar-scanner-msbuild/releases/download/4.8/sonar-scanner-msbuild-4.8.0.3126-net46.zip
-          unzip sonar-scanner-msbuild.exe
-          export PATH=$PATH:$(pwd)/sonar-scanner-msbuild-4.8.0.3126-net46/bin
+      - name: Setup SonarCloud
+        uses: SonarSource/sonarcloud-github-action@v1
+        with:
+          organization: Sas1989_CoinTrackerNew
+          token: ${{ secrets.SONAR_TOKEN }}
     
       - name: Restore
         run: dotnet restore ./CoinTrackerNew.sln
@@ -47,6 +42,9 @@ jobs:
 
       - name: Unit Test
         run: dotnet test ./CoinTrackerNew.sln --configuration Release --no-restore --no-build
+
+      - name: End SonarCloud analysis
+        run: sonar-scanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
 
       - name: Acceptance test
         run: dotnet test ./CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest.sln --configuration Release
