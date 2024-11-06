@@ -23,18 +23,18 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: ${{env.DOTNET_VERSION}}
-
-      - name: Setup SonarCloud
-        uses: SonarSource/sonarcloud-github-action@v1
-        with:
-          organization: Sas1989_CoinTrackerNew
-          token: ${{ secrets.SONAR_TOKEN }}
     
       - name: Restore
         run: dotnet restore ./CoinTrackerNew.sln
       
       - name: Build
         run: dotnet build ./CoinTrackerNew.sln --configuration Release --no-restore
+        
+      - name: Setup SonarCloud
+        uses: SonarSource/sonarcloud-github-action@v1
+        with:
+          organization: Sas1989_CoinTrackerNew
+          token: ${{ secrets.SONAR_TOKEN }}
 
       - name: Begin SonarQube analysis
         run: |
