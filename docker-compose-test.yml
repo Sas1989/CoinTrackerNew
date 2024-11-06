@@ -8,7 +8,11 @@ services:
       context: .
       dockerfile: App/Dockerfile
     environment:
-        - ConnectionStrings__Database=Server=cointracker.sql.test,1433;Database=CoinTracker;User Id=sa;Password=1TestPwd!!;TrustServerCertificate=True;
+        - DatabseOptions__Server=cointracker.sql.test,1433
+        - DatabseOptions__DatabaseName=CoinTracker
+        - DatabseOptions__User=sa
+        - DatabseOptions__Secret=1TestPwd!!
+        - DatabseOptions__AdditionalOptions=TrustServerCertificate=True;
     ports:
         - "28080:8080"
     depends_on:
