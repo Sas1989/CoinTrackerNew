@@ -37,9 +37,8 @@ jobs:
         
       - name: Setup SonarCloud
         uses: SonarSource/sonarcloud-github-action@v1
-        with:
-          organization: Sas1989_CoinTrackerNew
-          token: ${{ secrets.SONAR_TOKEN }}
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
       - name: Begin SonarQube analysis
         run: |
