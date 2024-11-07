@@ -39,7 +39,10 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: 17
-          distribution: 'adoptopenjdk' # Alternative distribution options are available. 
+          distribution: 'openjdk' # Alternative distribution options are available. 
+          
+      - name: Check Java version
+        run: java -version
  
       - name: Setup SonarCloud
         uses: SonarSource/sonarcloud-github-action@v1
@@ -57,4 +60,4 @@ jobs:
         run: sonar-scanner end /d:sonar.login=${{ secrets.SONAR_TOKEN }}
 
       - name: Acceptance test
-        run: dotnet test ./CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest.sln --configuration Release
+        run: dotnet test ./CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest/CoinTracker.AcceptanceTest.sln --configuration Release
