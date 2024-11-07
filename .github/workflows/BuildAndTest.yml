@@ -40,9 +40,6 @@ jobs:
         with:
           java-version: 17
           distribution: 'openjdk' # Alternative distribution options are available. 
-          
-      - name: Check Java version
-        run: java -version
  
       - name: Setup SonarCloud
         uses: SonarSource/sonarcloud-github-action@v1
